@@ -1,0 +1,32 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - echo Entered the pre-build phase...
+        - pwd
+        - cd sample-amplify-app
+        - pwd
+        - npm install
+
+    build:
+      commands:
+        - echo "🛠️ Setting up your environmental variables..."
+        - echo "VITE_REGION=$REGION" >> .env
+        - echo "VITE_API_ID=$GRAPHQL_API_ID" >> .env
+        - echo "VITE_GRAPHQL_URL=$GRAPHQL_ENDPOINT" >> .env
+        - echo "VITE_IDENTITY_POOL_ID=$IDENTITY_POOL_ID" >> .env
+        - echo "VITE_USER_POOL_ID=$USER_POOL_ID" >> .env
+        - echo "VITE_APP_CLIENT_ID=$APP_CLIENT_ID" >> .env
+        - echo "VITE_LANDING_BUCKET=$LANDING_BUCKET_NAME" >> .env
+        - echo "Printing environmental variables to the console to ensure they are correct"
+        - cat .env
+        - npm run build
+        - echo "✅ Success!"
+  artifacts:
+    baseDirectory: ./sample-amplify-app/build
+    files:
+      - "**/*"
+  cache:
+    paths:
+
